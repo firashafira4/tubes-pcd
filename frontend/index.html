@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Analisis Citra Medis Paru-paru</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-lungs"></i> Analisis Paru-paru
+        </div>
+        <ul class="navbar-nav">
+            <li><a href="#" data-page="dashboard" class="nav-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#" data-page="image-analysis" class="nav-link"><i class="fas fa-x-ray"></i> Analisis Citra</a></li>
+            <li><a href="#" data-page="guide" class="nav-link"><i class="fas fa-book"></i> Panduan Penggunaan</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page active">
+            <h1>Selamat Datang di Sistem Analisis Citra Medis Paru-paru</h1>
+            <p class="welcome-message">
+                Aplikasi ini membantu Anda dalam perbaikan dan analisis citra medis paru-paru untuk deteksi objek abnormal.
+                Gunakan menu navigasi di atas untuk menjelajahi fitur-fitur yang tersedia.
+            </p>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <i class="fas fa-cloud-upload-alt icon-large"></i>
+                    <h3>Unggah & Proses</h3>
+                    <p>Mulai analisis citra Anda dengan mudah.</p>
+                    <button class="dashboard-action-button" data-page="image-analysis">Mulai Analisis</button>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-info-circle icon-large"></i>
+                    <h3>Panduan Lengkap</h3>
+                    <p>Pelajari cara menggunakan aplikasi ini secara efektif.</p>
+                    <button class="dashboard-action-button" data-page="guide">Lihat Panduan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Analysis Page -->
+        <div id="imageAnalysisPage" class="page">
+            <h1>Analisis Citra Medis Paru-paru</h1>
+
+            <div class="upload-section">
+                <input type="file" id="imageUpload" accept=".dcm, .jpg, .jpeg, .png">
+                <label for="imageUpload" class="upload-button">Pilih Citra Medis</label>
+                <span id="fileNameDisplay" class="file-name">Belum ada file dipilih</span>
+                <button id="processButton" disabled>Proses Citra</button>
+                <div id="loadingSpinner" style="display: none;"></div>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <div class="image-display-section">
+                <!-- Card 1: Citra Asli -->
+                <div class="image-card">
+                    <h3>Citra Asli</h3>
+                    <img id="originalImage" src="" alt="Citra Asli" style="display: none;">
+                    <p id="originalImagePlaceholder" class="placeholder">Citra Asli Akan Muncul Di Sini</p>
+                </div>
+                <!-- Card 2: Perbaikan Citra (Hanya Enhanced) -->
+                <div class="image-card">
+                    <h3>Perbaikan Citra</h3>
+                    <img id="enhancedOnlyImage" src="" alt="Perbaikan Citra" style="display: none;">
+                    <p id="enhancedOnlyImagePlaceholder" class="placeholder">Citra Diperbaiki Akan Muncul Di Sini</p>
+                </div>
+                <!-- Card 3: Perbaikan Citra dan Deteksi -->
+                <div class="image-card">
+                    <h3>Perbaikan Citra & Deteksi</h3>
+                    <canvas id="processedWithDetectionsCanvas" style="display: none;"></canvas>
+                    <p id="processedWithDetectionsPlaceholder" class="placeholder">Citra Diperbaiki & Deteksi Akan Muncul Di Sini</p>
+                </div>
+                <!-- Card 4: Area Deteksi Zoom -->
+                <div class="image-card">
+                    <h3>Area Deteksi Zoom</h3> <!-- Changed Title Here -->
+                    <canvas id="originalWithDetectionsCanvas" style="display: none;"></canvas>
+                    <p id="originalWithDetectionsPlaceholder" class="placeholder">Area Deteksi Zoom Akan Muncul Di Sini</p>
+                </div>
+            </div>
+
+            <div class="detection-results">
+                <h3>Hasil Deteksi Abnormalitas</h3>
+                <ul id="detectionList">
+                    <li>Belum ada deteksi. Unggah dan proses citra untuk melihat hasilnya.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Guide/Blog Page -->
+        <div id="guidePage" class="page">
+            <h1>Panduan Penggunaan Aplikasi</h1>
+            <div class="guide-content">
+                <section>
+                    <h2>1. Memulai Aplikasi</h2>
+                    <p>Pastikan server backend Python Anda berjalan di <code>http://127.0.0.1:5000</code>. Anda dapat menjalankannya dari terminal di folder <code>backend</code> dengan perintah <code>python app.py</code> setelah mengaktifkan virtual environment Anda.</p>
+                    <p>Untuk mengakses antarmuka pengguna, buka file <code>index.html</code> yang ada di folder <code>frontend</code> langsung di browser Anda.</p>
+                </section>
+                <section>
+                    <h2>2. Mengunggah Citra Medis</h2>
+                    <ul>
+                        <li>Navigasi ke halaman "Analisis Citra" melalui navbar.</li>
+                        <li>Klik tombol "Pilih Citra Medis".</li>
+                        <li>Pilih file citra X-ray atau CT scan paru-paru Anda. Aplikasi ini mendukung format <strong>DICOM (.dcm)</strong>, <strong>JPG (.jpg/.jpeg)</strong>, dan <strong>PNG (.png)</strong>.</li>
+                        <li>Nama file yang Anda pilih akan muncul di samping tombol.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>3. Memproses dan Menganalisis Citra</h2>
+                    <ul>
+                        <li>Setelah memilih file, tombol "Proses Citra" akan aktif. Klik tombol ini.</li>
+                        <li>Aplikasi akan mengirim citra ke server backend untuk diproses. Ini meliputi:
+                            <ul>
+                                <li><strong>Perbaikan Citra (Image Enhancement):</strong> Citra akan ditingkatkan kontrasnya dan deraunya dikurangi untuk visibilitas yang lebih baik.</li>
+                                <li><strong>Deteksi Objek Abnormal:</strong> Model Deep Learning akan menganalisis citra untuk mendeteksi potensi abnormalitas seperti pneumonia.</li>
+                            </ul>
+                        </li>
+                        <li>Selama proses, Anda akan melihat indikator loading.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>4. Melihat Hasil Analisis</h2>
+                    <ul>
+                        <li>Setelah pemrosesan selesai, Anda akan melihat dua tampilan citra:
+                            <ul>
+                                <li><strong>Citra Asli:</strong> Gambar yang Anda unggah.</li>
+                                <li><strong>Citra Diperbaiki & Deteksi:</strong> Gambar yang telah ditingkatkan kualitasnya, dengan penanda (misalnya, kotak hijau) pada area yang terdeteksi sebagai abnormalitas.</li>
+                            </ul>
+                        </li>
+                        <li>Di bagian "Hasil Deteksi Abnormalitas", daftar item akan muncul yang merinci abnormalitas yang terdeteksi beserta tingkat kepercayaannya.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>5. Tips Tambahan</h2>
+                    <ul>
+                        <li>Gunakan citra medis berkualitas baik untuk hasil deteksi yang optimal.</li>
+                        <li>Akurasi deteksi sangat bergantung pada model AI yang digunakan.</li>
+                        <li>Untuk pengembangan lebih lanjut, Anda bisa melatih model AI Anda sendiri dengan dataset yang lebih besar dan beragam.</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
